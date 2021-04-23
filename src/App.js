@@ -1,37 +1,59 @@
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react';
+import API from './utils/fetch';
+// import './App.css';
 
-import './App.css';
-// import { useTable } from 'react-table';
+class App extends React.Component {
+  state = {
+    employees: [],
+  }
 
-import fetch from './utils/fetch';
+  componentDidMount() {
+    this.getEmployees();
+  }
 
-function App() {
+  getEmployees = async () => {
+    const { data } = await API.getUsers();
+    const employees = data.results.map(item => ({
+      name: `${item.name.first} ${item.name.last}`,
+      email: item.email,
+      phone: item.cell,
+      dob: item.dob.date,
+      image: item.picture.thumbnail,
+    }));
+    this.setState({ employees });
+  };
 
-  fetch.retreiveEmployees()
-    .then((data) => {
-      // console.log(data.data.results);
-      let employees = data.data.results;
-      console.log(employees);
-    });
+  render() {
+    const { employees } = this.state;
+    // console.log(this.state);
+    return <table>
+      <thead>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>DOB</th>
+      </thead>
+      <tbody>
+        {employees.length === 0 ? (<h2>No Employees!</h2>) :
+          (employees.map((employee) => (
+            <tr>
+              <td>
+                <img src={employee.image} />
+              </td>
+              <td>{employee.name}</td>
+              <td>{employee.phone}</td>
+              <td>{employee.email}</td>
+              <td>{employee.dob}</td>
+            </tr>))
+          )}
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      </tbody>
+    </table>
+  }
+
 }
 
 
