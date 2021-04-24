@@ -4,7 +4,7 @@ import API from '../utils/fetch'
 class UserTable extends React.Component {
     state = {
         employees: [],
-        search: ""
+        inputValue: ""
     }
 
     componentDidMount() {
@@ -13,27 +13,43 @@ class UserTable extends React.Component {
 
     getEmployees = async () => {
         const { data } = await API.getUsers();
-        const employees = data.results.map(item => ({
-            name: `${item.name.first} ${item.name.last}`,
-            email: item.email,
-            phone: item.cell,
-            dob: item.dob.date,
-            image: item.picture.thumbnail,
+        const employees = data.results.map(data => ({
+            name: `${data.name.last}, ${data.name.first}`,
+            email: data.email,
+            phone: data.cell,
+            dob: data.dob.date,
+            image: data.picture.thumbnail,
         }));
         this.setState({ employees });
     };
 
-    handleSearchChange = e => {
-        this.setState({search: e.target.value});
+    employeeFilterOnChange = (e) => {
+        this.setState({ inputValue: e.target.value })
     }
 
-    filterEmployee = employee => {
-        return true;
+    filterEmployees = () => {
+        this.state.employees.filter(employee => {
+            return employee.name.toLowerCase().includes(this.state.inputValue.toLowerCase())
+        })
     }
 
-    renderEmployees() {
-        const { employees } = this.state;
-        return <table>
+    // renderEmployees() {
+    //     const { employees } = this.state.employees;
+    //     return 
+    // }
+
+    render() {
+        const { employees } = this.state.employees;
+
+        return <div>
+            <form>
+                <input
+                    placeholder="Search"
+                    ref={input => {this.search = input}}
+                    onChange={this.handleSearchChange}
+                />
+            </form>
+            <table>
             <thead>
                 <th>Image</th>
                 <th>Name</th>
@@ -42,7 +58,7 @@ class UserTable extends React.Component {
                 <th>DOB</th>
             </thead>
             <tbody>
-                {employees.length === 0 ? (<h2>No Employees!</h2>) :
+            {employees.length === 0 ? (<h2>No Employees!</h2>) :
                     (employees
                         .filter(this.filterEmployee).map((employee) => (
                             <tr>
@@ -55,16 +71,13 @@ class UserTable extends React.Component {
                                 <td>{employee.dob}</td>
                             </tr>))
                     )}
-
             </tbody>
         </table>
-    }
+        </div>
 
-    render() {
-        
     }
 
 }
 
-export default UserTable; 
+export default UserTable;
 
