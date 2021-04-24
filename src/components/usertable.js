@@ -27,19 +27,17 @@ class UserTable extends React.Component {
         this.setState({ inputValue: e.target.value })
     }
 
-    filterEmployees = () => {
-        this.state.employees.filter(employee => {
-            return employee.name.toLowerCase().includes(this.state.inputValue.toLowerCase())
-        })
-    }
-
-    // renderEmployees() {
-    //     const { employees } = this.state.employees;
-    //     return 
+    // filterEmployees = () => {
+    //     this.state.employees.filter(employee => {
+    //         return employee.name.toLowerCase().includes(this.state.inputValue.toLowerCase())
+    //     })
     // }
 
     render() {
-        const { employees } = this.state.employees;
+
+        const filterEmployees = this.state.employees.filter(employee =>{
+            return employee.name.toLowerCase().includes(this.state.inputValue.toLowerCase())
+        })
 
         return <div>
             <form>
@@ -58,9 +56,8 @@ class UserTable extends React.Component {
                 <th>DOB</th>
             </thead>
             <tbody>
-            {employees.length === 0 ? (<h2>No Employees!</h2>) :
-                    (employees
-                        .filter(this.filterEmployee).map((employee) => (
+               {filterEmployees.length === 0 ? (<h2>No Employees!</h2>) :
+                    (filterEmployees.map((employee) => (
                             <tr>
                                 <td>
                                     <img src={employee.image} />
