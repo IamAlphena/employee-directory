@@ -1,0 +1,27 @@
+body{
+    background-color: #393E46;
+    /* background-image: linear-gradient( #393E46, #eee); */
+}
+
+.jumbotron{
+    background-color: #00ADB5;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    text-align: center;
+    margin: 5px;
+}
+
+table {
+    margin: 10%;
+}
+
+th, td {
+    border-bottom: 1px solid #AAD8D3;
+    color: #eee;
+}
+
+form {
+   margin: auto;
+   width: 10%;
+
+}

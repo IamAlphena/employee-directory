@@ -1,5 +1,6 @@
 import React from "react";
 import API from '../utils/fetch'
+import "./style.css"
 
 class UserTable extends React.Component {
     state = {
@@ -66,7 +67,7 @@ class UserTable extends React.Component {
                                 <td>{employee.name}</td>
                                 <td>{employee.phone}</td>
                                 <td>{employee.email}</td>
-                                <td>{employee.dob}</td>
+                                <td>{new Date(employee.dob).toDateString()}</td>
                             </tr>))
                     )}
             </tbody>

@@ -1,13 +1,13 @@
 import { Jumbotron } from "react-bootstrap";
 import React from "react";
+import "./style.css"
 
 function JumboTron() {
     return (
         <Jumbotron fluid>
-        <h1>Hello, world!</h1>
+        <h1>Employee Database</h1>
         <p>
-          This is a simple hero unit, a simple jumbotron-style component for calling
-          extra attention to featured content or information.
+          Please use the search bar to help find who you're looking for. 
         </p>
       </Jumbotron>
     )
