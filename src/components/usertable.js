@@ -23,7 +23,8 @@ class UserTable extends React.Component {
         this.setState({ employees });
     };
 
-    employeeFilterOnChange = (e) => {
+    handleSearchChange = (e) => {
+        e.preventDefault();
         this.setState({ inputValue: e.target.value })
     }
 
